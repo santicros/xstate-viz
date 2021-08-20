@@ -1,5 +1,4 @@
 import { createModel } from 'xstate/lib/model';
-import { EDITOR_CLASSNAME } from './constants';
 import { isWithPlatformMetaKey } from './utils';
 
 const paletteModel = createModel(undefined, {
@@ -24,8 +23,7 @@ export const paletteMachine = paletteModel.createMachine({
             return Object.values(keybindings).some(Boolean);
           }
           function eventRoseFromEditor(e: KeyboardEvent) {
-            const editorElement = document.querySelector(EDITOR_CLASSNAME);
-            return editorElement && editorElement.contains(e.target as Node);
+            return !!(e.target as Element).closest('.monaco-editor');
           }
           const eventHandler = (e: KeyboardEvent) => {
             if (
